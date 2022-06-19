@@ -26,6 +26,7 @@ class RegisterUserUsecase {
       throw new UseCaseError('User email already exists')
     }
     const user = new User(userProps)
+    await user.updatePassword(userProps.password)
     await this.userRepository.save(user)
     return user.toJSON()
   }
