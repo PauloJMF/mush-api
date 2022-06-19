@@ -4,9 +4,9 @@ type UserProps = {
   name: string
   email: string
   password: string
-  email_confirmed_at: Date
-  created_at: Date
-  updated_at: Date
+  email_confirmed_at?: Date
+  created_at?: Date
+  updated_at?: Date
 }
 
 class User {
@@ -14,15 +14,17 @@ class User {
 
   constructor (private props: UserProps, id?: string) {
     this.id = id || crypto.randomUUID()
-    this.props = props
+    const date = new Date()
+    this.props = {
+      ...props,
+      email_confirmed_at: props.email_confirmed_at || null,
+      created_at: props.created_at || date,
+      updated_at: props.updated_at || date
+    }
   }
 
   confirmEmail () {
     this.email_confirmed_at = new Date()
-  }
-
-  updateName (name: string) {
-    this.name = name
   }
 
   async hashPassword (password: string): Promise<string> {
@@ -85,12 +87,22 @@ class User {
     this.props.email_confirmed_at = value
   }
 
+  get created_at () {
+    return this.props.created_at
+  }
+
+  get updated_at () {
+    return this.props.created_at
+  }
+
   toJSON () {
     return {
       id: this.id,
       name: this.name,
       email: this.email,
-      email_confirmed_at: this.email_confirmed_at
+      email_confirmed_at: this.email_confirmed_at,
+      created_at: this.created_at,
+      updated_at: this.updated_at
     }
   }
 }
