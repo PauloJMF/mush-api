@@ -1,5 +1,5 @@
 interface Database {
     connect(): Promise<void>;
-    query(query: string, values?: any): Promise<any>;
+    getInstance(): any;
 }
 export { Database }
