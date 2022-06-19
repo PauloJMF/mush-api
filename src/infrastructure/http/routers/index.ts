@@ -1,10 +1,13 @@
 import express, { NextFunction, Request, Response, Router } from 'express'
 import { userRouter } from './user.router'
 import { errorHandlerMiddleware } from '../middleware/error-handler.middleware'
+const cors = require('cors')
 
 const router = Router()
 
 router.use(express.json())
+
+router.use(cors())
 
 router.get('/health-check', (_: Request, res: Response) => {
   res.json({
