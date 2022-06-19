@@ -50,4 +50,15 @@ describe('User Entity Test', function () {
     user.confirmEmail()
     expect(user.email_verified_at).toBeDefined()
   })
+
+  it('should generate token', async function () {
+    const userProps = {
+      name: 'test',
+      email: 'test@gmail.com',
+      password: 'test'
+    } as UserProps
+    const user = new User(userProps)
+    const token = await user.generateToken()
+    expect(token).toBeDefined()
+  })
 })

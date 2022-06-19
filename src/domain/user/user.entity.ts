@@ -1,4 +1,6 @@
 import crypto from 'crypto'
+import { JwtConfig } from '../../shared/config/jwt.config'
+import jwt from 'jsonwebtoken'
 
 type UserProps = {
   name: string
@@ -53,6 +55,15 @@ class User {
       throw new Error('Cannot update password to the same password')
     }
     this.password = hashedPassword
+  }
+
+  async generateToken (): Promise<string> {
+    const data = {
+      id: this.id,
+      name: this.name,
+      time: new Date().getTime()
+    }
+    return jwt.sign(data, JwtConfig.secret)
   }
 
   get name () {
