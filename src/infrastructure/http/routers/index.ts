@@ -1,6 +1,8 @@
-import { Request, Response, Router } from 'express'
+import express, { Request, Response, Router } from 'express'
 
 const router = Router()
+
+router.use(express.json())
 
 router.get('/health-check', (_: Request, res: Response) => {
   res.json({
