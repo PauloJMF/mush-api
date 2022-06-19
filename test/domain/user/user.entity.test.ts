@@ -46,8 +46,8 @@ describe('User Entity Test', function () {
       password: 'test'
     } as UserProps
     const user = new User(userProps)
-    expect(user.email_confirmed_at).toBeUndefined()
+    expect(user.email_verified_at).toBeNull()
     user.confirmEmail()
-    expect(user.email_confirmed_at).toBeDefined()
+    expect(user.email_verified_at).toBeDefined()
   })
 })

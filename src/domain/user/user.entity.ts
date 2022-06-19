@@ -4,7 +4,7 @@ type UserProps = {
   name: string
   email: string
   password: string
-  email_confirmed_at?: Date
+  email_verified_at?: Date | null
   created_at?: Date
   updated_at?: Date
 }
@@ -17,14 +17,14 @@ class User {
     const date = new Date()
     this.props = {
       ...props,
-      email_confirmed_at: props.email_confirmed_at || null,
+      email_verified_at: props.email_verified_at || null,
       created_at: props.created_at || date,
       updated_at: props.updated_at || date
     }
   }
 
   confirmEmail () {
-    this.email_confirmed_at = new Date()
+    this.email_verified_at = new Date()
   }
 
   async hashPassword (password: string): Promise<string> {
@@ -71,20 +71,20 @@ class User {
     this.props.email = value
   }
 
-  private set password (value: string) {
-    this.props.password = value
-  }
-
   get password () {
     return this.props.password
   }
 
-  get email_confirmed_at () {
-    return this.props.email_confirmed_at
+  private set password (value: string) {
+    this.props.password = value
   }
 
-  private set email_confirmed_at (value: Date) {
-    this.props.email_confirmed_at = value
+  get email_verified_at () {
+    return this.props.email_verified_at
+  }
+
+  private set email_verified_at (value: Date) {
+    this.props.email_verified_at = value
   }
 
   get created_at () {
@@ -95,12 +95,24 @@ class User {
     return this.props.created_at
   }
 
+  toDB () {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      password: this.password,
+      email_verified_at: this.email_verified_at,
+      created_at: this.created_at,
+      updated_at: this.updated_at
+    }
+  }
+
   toJSON () {
     return {
       id: this.id,
       name: this.name,
       email: this.email,
-      email_confirmed_at: this.email_confirmed_at,
+      email_verified_at: this.email_verified_at,
       created_at: this.created_at,
       updated_at: this.updated_at
     }
