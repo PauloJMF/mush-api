@@ -1,0 +1,98 @@
+import crypto from 'crypto'
+
+type UserProps = {
+  name: string
+  email: string
+  password: string
+  email_confirmed_at: Date
+  created_at: Date
+  updated_at: Date
+}
+
+class User {
+  public readonly id: string
+
+  constructor (private props: UserProps, id?: string) {
+    this.id = id || crypto.randomUUID()
+    this.props = props
+  }
+
+  confirmEmail () {
+    this.email_confirmed_at = new Date()
+  }
+
+  updateName (name: string) {
+    this.name = name
+  }
+
+  async hashPassword (password: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const salt = crypto.randomBytes(16).toString('hex')
+      crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+        if (err) reject(err)
+        resolve(salt + ':' + derivedKey.toString('hex'))
+      })
+    })
+  }
+
+  async verify (password: string, hash: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const [salt, key] = hash.split(':')
+      crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+        if (err) reject(err)
+        resolve(key === derivedKey.toString('hex'))
+      })
+    })
+  }
+
+  async updatePassword (password: string) {
+    const hashedPassword = await this.hashPassword(password)
+    if (this.password === hashedPassword) {
+      throw new Error('Cannot update password to the same password')
+    }
+    this.password = hashedPassword
+  }
+
+  get name () {
+    return this.props.name
+  }
+
+  private set name (value: string) {
+    this.props.name = value
+  }
+
+  get email () {
+    return this.props.email
+  }
+
+  private set email (value: string) {
+    this.props.email = value
+  }
+
+  private set password (value: string) {
+    this.props.password = value
+  }
+
+  get password () {
+    return this.props.password
+  }
+
+  get email_confirmed_at () {
+    return this.props.email_confirmed_at
+  }
+
+  private set email_confirmed_at (value: Date) {
+    this.props.email_confirmed_at = value
+  }
+
+  toJSON () {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      email_confirmed_at: this.email_confirmed_at
+    }
+  }
+}
+
+export { User, UserProps }
