@@ -6,7 +6,7 @@ import { RegisterUserUsecase } from '../../../domain/user/use-cases/register-use
 
 const userRouter = Router()
 const prismaClient = new PrismaDatabase()
-const userRepository = new UserRepositoryPG(prismaClient.getInstance())
+const userRepository = new UserRepositoryPG(prismaClient)
 const registerUseCase = new RegisterUserUsecase(userRepository)
 const registerController = new RegisterUserController(registerUseCase)
 
