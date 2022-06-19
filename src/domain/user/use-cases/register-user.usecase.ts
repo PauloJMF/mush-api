@@ -1,5 +1,6 @@
 import { User } from '../user.entity'
 import { UserRepository } from '../user.repository'
+import { UseCaseError } from '../../../shared/errors/use-case.error'
 
 type RegisterUserInput = {
   name: string,
@@ -22,7 +23,7 @@ class RegisterUserUsecase {
   async execute (userProps: RegisterUserInput): Promise<RegisterUserOutput> {
     const userExists = await this.userRepository.findByEmail(userProps.email)
     if (userExists) {
-      throw new Error('User email already exists')
+      throw new UseCaseError('User email already exists')
     }
     const user = new User(userProps)
     await this.userRepository.save(user)
@@ -30,4 +31,4 @@ class RegisterUserUsecase {
   }
 }
 
-export { RegisterUserUsecase }
+export { RegisterUserUsecase, RegisterUserInput, RegisterUserOutput }
