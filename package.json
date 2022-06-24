@@ -8,7 +8,7 @@
     "build": "tsc --project tsconfig.json",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --exit-child --ignore-watch node_modules --no-notify -r dotenv/config src/infrastructure/http/index.ts",
     "start": "node -r dotenv/config dist/src/infrastructure/http/index.js",
-    "test": "node_modules/.bin/jest --detectOpenHandles --forceExit --runInBand"
+    "test": "node_modules/.bin/jest --detectOpenHandles --forceExit --runInBand --setupFiles dotenv/config"
   },
   "repository": {
     "type": "git",

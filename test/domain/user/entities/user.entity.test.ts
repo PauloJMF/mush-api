@@ -1,4 +1,4 @@
-import { User, UserProps } from '../../../src/domain/user/entities/user.entity'
+import { User, UserProps } from '../../../../src/domain/user/entities/user.entity'
 
 describe('User Entity Test', function () {
   it('should add uuid to user', function () {
