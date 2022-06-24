@@ -1,6 +1,8 @@
 import { User } from '../entities/user.entity'
 import { UserRepository } from '../repositories/user.repository'
 import { UseCaseError } from '../../../shared/errors/use-case.error'
+import { inject, injectable } from 'inversify'
+import { Types } from '../../../infrastructure/ioc/types'
 
 type RegisterUserInput = {
   name: string,
@@ -16,8 +18,11 @@ type RegisterUserOutput = {
   updated_at: Date
 }
 
-class RegisterUserUsecase {
-  constructor (private userRepository: UserRepository) {
+@injectable()
+class RegisterUserUseCase {
+  constructor (
+    @inject(Types.UserRepository)
+    private userRepository: UserRepository) {
   }
 
   async execute (userProps: RegisterUserInput): Promise<RegisterUserOutput> {
@@ -32,4 +37,4 @@ class RegisterUserUsecase {
   }
 }
 
-export { RegisterUserUsecase, RegisterUserInput, RegisterUserOutput }
+export { RegisterUserUseCase, RegisterUserInput, RegisterUserOutput }

@@ -1,5 +1,7 @@
 import { UserRepository } from '../repositories/user.repository'
 import { UseCaseError } from '../../../shared/errors/use-case.error'
+import { inject, injectable } from 'inversify'
+import { Types } from '../../../infrastructure/ioc/types'
 
 type LoginUserInput = {
   email: string,
@@ -11,8 +13,12 @@ type LoginUserOutput = {
   token: string
 }
 
-class LoginUserUsecase {
-  constructor (private readonly userRepository: UserRepository) {
+@injectable()
+class LoginUserUseCase {
+  constructor (
+    @inject(Types.UserRepository)
+    private readonly userRepository: UserRepository
+  ) {
   }
 
   async execute (loginProps: LoginUserInput): Promise<LoginUserOutput> {
@@ -37,4 +43,4 @@ class LoginUserUsecase {
   }
 }
 
-export { LoginUserUsecase, LoginUserInput, LoginUserOutput }
+export { LoginUserUseCase, LoginUserInput, LoginUserOutput }

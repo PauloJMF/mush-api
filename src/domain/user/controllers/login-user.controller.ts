@@ -1,9 +1,15 @@
-import { LoginUserInput, LoginUserUsecase } from '../use-cases/login-user.usecase'
+import { LoginUserInput, LoginUserUseCase } from '../use-cases/login-user.usecase'
 import { Request, Response } from 'express'
 import { ValidationError } from '../../../shared/errors/validation.error'
+import { inject, injectable } from 'inversify'
+import { Types } from '../../../infrastructure/ioc/types'
 
+@injectable()
 class LoginUserController {
-  constructor (private readonly useCase: LoginUserUsecase) {
+  constructor (
+    @inject(Types.LoginUserUseCase)
+    private readonly useCase: LoginUserUseCase
+  ) {
   }
 
   validate (userProps: LoginUserInput): void {

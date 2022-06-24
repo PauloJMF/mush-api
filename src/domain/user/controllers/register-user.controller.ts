@@ -1,11 +1,23 @@
-import { RegisterUserInput, RegisterUserUsecase } from '../use-cases/register-user.usecase'
-import { Request, Response } from 'express'
+import { RegisterUserInput, RegisterUserUseCase } from '../use-cases/register-user.usecase'
+import { NextFunction, Request, Response } from 'express'
 import { ValidationError } from '../../../shared/errors/validation.error'
+import { inject, injectable } from 'inversify'
+import { Types } from '../../../infrastructure/ioc/types'
 
-class RegisterUserController {
-  private readonly useCase: RegisterUserUsecase
+interface RegisterUserControllerInterface {
+  validate (userProps: RegisterUserInput): void,
 
-  constructor (registerUseCase: RegisterUserUsecase) {
+  handle (request: Request, response: Response, next: NextFunction): Promise<Response>
+}
+
+@injectable()
+class RegisterUserController implements RegisterUserControllerInterface {
+  private readonly useCase: RegisterUserUseCase
+
+  constructor (
+    @inject(Types.RegisterUserUseCase)
+      registerUseCase: RegisterUserUseCase
+  ) {
     this.useCase = registerUseCase
   }
 
@@ -25,7 +37,7 @@ class RegisterUserController {
     }
   }
 
-  async handle (request: Request, response: Response, next:any): Promise<Response> {
+  async handle (request: Request, response: Response, next: any): Promise<Response> {
     try {
       const userProps: RegisterUserInput = request.body
       this.validate(userProps)
@@ -37,4 +49,4 @@ class RegisterUserController {
   }
 }
 
-export { RegisterUserController }
+export { RegisterUserController, RegisterUserControllerInterface }
