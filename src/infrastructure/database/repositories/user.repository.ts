@@ -1,5 +1,5 @@
-import { UserRepository } from '../../../domain/user/user.repository'
-import { User } from '../../../domain/user/user.entity'
+import { UserRepository } from '../../../domain/user/repositories/user.repository'
+import { User } from '../../../domain/user/entities/user.entity'
 import { Database } from '../index'
 import { PrismaClient } from '@prisma/client'
 

@@ -1,5 +1,5 @@
-import { User } from '../user.entity'
-import { UserRepository } from '../user.repository'
+import { User } from '../entities/user.entity'
+import { UserRepository } from '../repositories/user.repository'
 import { UseCaseError } from '../../../shared/errors/use-case.error'
 
 type RegisterUserInput = {

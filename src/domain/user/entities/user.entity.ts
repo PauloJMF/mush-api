@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { JwtConfig } from '../../shared/config/jwt.config'
+import { JwtConfig } from '../../../shared/config/jwt.config'
 import jwt from 'jsonwebtoken'
 
 type UserProps = {

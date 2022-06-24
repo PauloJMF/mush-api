@@ -1,5 +1,5 @@
 import { LoginUserUsecase } from '../../../../src/domain/user/use-cases/login-user.usecase'
-import { User } from '../../../../src/domain/user/user.entity'
+import { User } from '../../../../src/domain/user/entities/user.entity'
 import { UseCaseError } from '../../../../src/shared/errors/use-case.error'
 
 describe('Login Use Case', function () {
