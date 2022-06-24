@@ -11,7 +11,7 @@ class UserRepositoryPG implements UserRepository {
   }
 
   async findByEmail (email: string): Promise<User | null> {
-    const userProps = await this.database.user.findFirst({ where: { email } })
+    const userProps = await this.database.users.findFirst({ where: { email } })
     if (!userProps) {
       return null
     }
@@ -20,7 +20,7 @@ class UserRepositoryPG implements UserRepository {
 
   async save (user: User): Promise<void> {
     const userData = user.toDB()
-    await this.database.user.create({
+    await this.database.users.create({
       data: userData
     })
   }
