@@ -3,6 +3,7 @@ import { UserRepository } from '../repositories/user.repository'
 import { UseCaseError } from '../../../shared/errors/use-case.error'
 import { inject, injectable } from 'inversify'
 import { Types } from '../../../infrastructure/ioc/types'
+import { Mailer } from '../../shared/Mailer'
 
 type RegisterUserInput = {
   name: string,
@@ -22,7 +23,10 @@ type RegisterUserOutput = {
 class RegisterUserUseCase {
   constructor (
     @inject(Types.UserRepository)
-    private userRepository: UserRepository) {
+    private userRepository: UserRepository,
+    @inject(Types.Mailer)
+    private mailer: Mailer
+  ) {
   }
 
   async execute (userProps: RegisterUserInput): Promise<RegisterUserOutput> {
@@ -33,6 +37,7 @@ class RegisterUserUseCase {
     const user = new User(userProps)
     await user.updatePassword(userProps.password)
     await this.userRepository.save(user)
+    await this.mailer.sendActivationEmail(user.email, 'Teste')
     return user.toJSON()
   }
 }
