@@ -8,7 +8,8 @@ const recoveryPasswordRepository: RecoveryPasswordRepository = {
   save: jest.fn().mockResolvedValue(null)
 }
 const mailerMock: Mailer = {
-  sendRecoveryEmail: jest.fn().mockResolvedValue(null)
+  sendRecoveryEmail: jest.fn().mockResolvedValue(null),
+  sendActivationEmail: jest.fn().mockResolvedValue(null)
 }
 
 const userRepository = {

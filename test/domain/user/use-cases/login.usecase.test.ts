@@ -1,4 +1,4 @@
-import { LoginUserUsecase } from '../../../../src/domain/user/use-cases/login-user.usecase'
+import { LoginUserUseCase } from '../../../../src/domain/user/use-cases/login-user.usecase'
 import { User } from '../../../../src/domain/user/entities/user.entity'
 import { UseCaseError } from '../../../../src/shared/errors/use-case.error'
 
@@ -20,7 +20,7 @@ describe('Login Use Case', function () {
       }),
       save: jest.fn().mockResolvedValue(null)
     }
-    const loginUserUsecase = new LoginUserUsecase(userRepository)
+    const loginUserUsecase = new LoginUserUseCase(userRepository)
     const tokenResponse = await loginUserUsecase.execute(loginProps)
     expect(tokenResponse.id).toBeDefined()
     expect(tokenResponse.token).toBeDefined()
@@ -41,7 +41,7 @@ describe('Login Use Case', function () {
       }),
       save: jest.fn().mockResolvedValue(null)
     }
-    const loginUserUsecase = new LoginUserUsecase(userRepository)
+    const loginUserUsecase = new LoginUserUseCase(userRepository)
     try {
       await loginUserUsecase.execute(loginProps)
     } catch (error) {

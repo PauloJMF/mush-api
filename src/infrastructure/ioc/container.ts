@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { Container } from 'inversify'
 import { UserRepository } from '../../domain/user/repositories/user.repository'
 import { Types } from './types'

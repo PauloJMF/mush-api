@@ -1,4 +1,10 @@
-import { RegisterUserUsecase } from '../../../../src/domain/user/use-cases/register-user.usecase'
+import { RegisterUserUseCase } from '../../../../src/domain/user/use-cases/register-user.usecase'
+import { Mailer } from '../../../../src/domain/shared/Mailer'
+
+const fakeMailer: Mailer = {
+  sendActivationEmail: jest.fn().mockResolvedValue(null),
+  sendRecoveryEmail: jest.fn().mockResolvedValue(null)
+}
 
 describe('Register User Use Case', function () {
   it('should save new user on repository', async () => {
@@ -13,7 +19,7 @@ describe('Register User Use Case', function () {
       save: jest.fn().mockResolvedValue(null)
     }
 
-    const registerUserUsecase = new RegisterUserUsecase(userRepository)
+    const registerUserUsecase = new RegisterUserUseCase(userRepository, fakeMailer)
 
     await registerUserUsecase.execute(userProps)
 
@@ -37,7 +43,7 @@ describe('Register User Use Case', function () {
       save: jest.fn().mockResolvedValue(null)
     }
 
-    const registerUserUsecase = new RegisterUserUsecase(userRepository)
+    const registerUserUsecase = new RegisterUserUseCase(userRepository, fakeMailer)
     try {
       await registerUserUsecase.execute(userProps)
     } catch (error) {
