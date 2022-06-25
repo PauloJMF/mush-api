@@ -11,10 +11,15 @@ import { RegisterUserUseCase } from '../../domain/user/use-cases/register-user.u
 import { LoginUserUseCase } from '../../domain/user/use-cases/login-user.usecase'
 import { NodeMailer } from '../mail/mailer'
 import { Mailer } from '../../domain/shared/Mailer'
+import { ForgotPasswordController } from '../../domain/user/controllers/forgot-password.controller'
+import { ForgotPasswordUseCase } from '../../domain/user/use-cases/forgot-password.usecase'
+import { RecoveryPasswordRepository } from '../../domain/user/repositories/recovery-password.repository'
+import { RecoveryPasswordRepositoryPG } from '../database/repositories/recovery-password.repository'
 
 const container = new Container()
 
 container.bind<UserRepository>(Types.UserRepository).to(UserRepositoryPG).inSingletonScope()
+container.bind<RecoveryPasswordRepository>(Types.RecoveryPasswordRepository).to(RecoveryPasswordRepositoryPG).inSingletonScope()
 container.bind<Database>(Types.Database).to(PrismaDatabase).inSingletonScope()
 container.bind<Mailer>(Types.Mailer).to(NodeMailer).inSingletonScope()
 
@@ -22,5 +27,7 @@ container.bind<RegisterUserController>(Types.RegisterUserController).to(Register
 container.bind<RegisterUserUseCase>(Types.RegisterUserUseCase).to(RegisterUserUseCase)
 container.bind<LoginUserController>(Types.LoginUserController).to(LoginUserController)
 container.bind<LoginUserUseCase>(Types.LoginUserUseCase).to(LoginUserUseCase)
+container.bind<ForgotPasswordController>(Types.ForgotPasswordController).to(ForgotPasswordController)
+container.bind<ForgotPasswordUseCase>(Types.ForgotPasswordUseCase).to(ForgotPasswordUseCase)
 
 export { container }

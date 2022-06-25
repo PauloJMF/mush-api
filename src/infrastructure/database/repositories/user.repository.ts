@@ -21,7 +21,7 @@ class UserRepositoryPG implements UserRepository {
     if (!userProps) {
       return null
     }
-    return new User(userProps)
+    return new User(userProps, userProps.id)
   }
 
   async save (user: User): Promise<void> {
