@@ -26,7 +26,7 @@ class ForgotPasswordController {
       const loginProps: ForgotPasswordInput = request.body
       this.validate(loginProps)
       await this.useCase.execute(loginProps)
-      return response.status(201)
+      return response.status(201).send()
     } catch (error) {
       next(error)
     }

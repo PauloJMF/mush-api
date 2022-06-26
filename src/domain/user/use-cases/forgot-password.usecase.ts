@@ -36,7 +36,7 @@ class ForgotPasswordUseCase {
 
     const recoveryPassword = new RecoveryPassword(recoveryProps)
     await this.passwordRecoveryRepository.save(recoveryPassword)
-    await this.mailer.sendRecoveryEmail(forgotPasswordInput.email, recoveryPassword.generateRecoveryLink())
+    await this.mailer.sendRecoveryEmail(user.name, forgotPasswordInput.email, recoveryPassword.generateRecoveryLink())
   }
 }
 

@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl", "linux-arm-openssl-1.1.x"]
+  binaryTargets = ["native", "linux-musl", "linux-arm64-openssl-1.1.x"]
 }
 
 datasource db {
@@ -28,7 +28,7 @@ model recovery_passwords {
     user_id     String      @db.Uuid
     email       String      @db.VarChar(255)
     hash        String      @db.VarChar(255)
-    used_at     DateTime
+    used_at     DateTime?
     expires_at  DateTime
     created_at  DateTime    @default(now())
     updated_at  DateTime    @updatedAt

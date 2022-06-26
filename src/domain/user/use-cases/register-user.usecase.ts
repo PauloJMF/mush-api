@@ -37,7 +37,7 @@ class RegisterUserUseCase {
     const user = new User(userProps)
     await user.updatePassword(userProps.password)
     await this.userRepository.save(user)
-    await this.mailer.sendActivationEmail(user.email, 'Teste')
+    await this.mailer.sendActivationEmail(user.name, user.email, 'Teste')
     return user.toJSON()
   }
 }

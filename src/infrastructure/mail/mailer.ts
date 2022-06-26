@@ -1,6 +1,8 @@
 import { MailerConfig } from '../../shared/config/mailer.config'
 import { Mailer } from '../../domain/shared/Mailer'
 import { injectable } from 'inversify'
+import { activationEmail } from '../../domain/emails/activation.email'
+import { recoverPasswordEmail } from '../../domain/emails/recover-password.email'
 
 const nodemailer = require('nodemailer')
 
@@ -17,28 +19,26 @@ class NodeMailer implements Mailer {
     })
   }
 
-  async sendActivationEmail (email: string, activationLink: string): Promise<void> {
-    const info = await this.transporter.sendMail({
-      from: '"Fred Foo 👻" <foo@example.com>', // sender address
-      to: 'bar@example.com, baz@example.com', // list of receivers
-      subject: 'Hello ✔', // Subject line
-      text: 'Hello world?', // plain text body
-      html: '<b>Hello world?</b>' // html body
+  async sendActivationEmail (name: string, email: string, activationLink: string): Promise<void> {
+    const activationLayout = activationEmail(name, email, activationLink)
+    await this.transporter.sendMail({
+      from: MailerConfig.fromEmail,
+      to: email,
+      subject: activationLayout.subject,
+      text: activationLayout.text,
+      html: activationLayout.html
     })
-    console.log(info)
-    return Promise.resolve(undefined)
   }
 
-  async sendRecoveryEmail (email: string, recoveryLink: string): Promise<void> {
-    const info = await this.transporter.sendMail({
-      from: '"Fred Foo 👻" <foo@example.com>', // sender address
-      to: email, // list of receivers
-      subject: 'Hello ✔', // Subject line
-      text: 'Hello world?', // plain text body
-      html: '<b>Hello world?</b>' // html body
+  async sendRecoveryEmail (name: string, email: string, recoveryLink: string): Promise<void> {
+    const activationLayout = recoverPasswordEmail(name, recoveryLink)
+    await this.transporter.sendMail({
+      from: MailerConfig.fromEmail,
+      to: email,
+      subject: activationLayout.subject,
+      text: activationLayout.text,
+      html: activationLayout.html
     })
-    console.log(info)
-    return Promise.resolve(undefined)
   }
 }
 

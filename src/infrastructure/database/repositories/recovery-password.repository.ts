@@ -24,6 +24,7 @@ class RecoveryPasswordRepositoryPG implements RecoveryPasswordRepository {
   }
 
   async save (recoveryPassword: RecoveryPassword): Promise<void> {
+    console.log(recoveryPassword.toDB())
     await this.client.recovery_passwords.create({
       data: recoveryPassword.toDB()
     })

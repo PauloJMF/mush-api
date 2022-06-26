@@ -1,6 +1,7 @@
 interface Mailer {
-  sendActivationEmail (email: string, activationLink: string): Promise<void>
-  sendRecoveryEmail (email: string, recoveryLink: string): Promise<void>
+  sendActivationEmail (name: string, email: string, activationLink: string): Promise<void>
+
+  sendRecoveryEmail (name: string, email: string, recoveryLink: string): Promise<void>
 }
 
 export { Mailer }
