@@ -6,6 +6,7 @@ type UserProps = {
   name: string
   email: string
   password: string
+  email_verification_code: string
   email_verified_at?: Date | null
   created_at?: Date
   updated_at?: Date
@@ -17,8 +18,10 @@ class User {
   constructor (private props: UserProps, id?: string) {
     this.id = id || crypto.randomUUID()
     const date = new Date()
+    const verificationCode = crypto.randomBytes(64).toString('hex')
     this.props = {
       ...props,
+      email_verification_code: props.email_verification_code || verificationCode,
       email_verified_at: props.email_verified_at || null,
       created_at: props.created_at || date,
       updated_at: props.updated_at || date
@@ -106,12 +109,17 @@ class User {
     return this.props.created_at
   }
 
+  get email_verification_code () {
+    return this.props.email_verification_code
+  }
+
   toDB () {
     return {
       id: this.id,
       name: this.name,
       email: this.email,
       password: this.password,
+      email_verification_code: this.email_verification_code,
       email_verified_at: this.email_verified_at,
       created_at: this.created_at,
       updated_at: this.updated_at
