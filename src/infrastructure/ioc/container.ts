@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { Container } from 'inversify'
 import { UserRepository } from '../../domain/user/repositories/user.repository'
 import { Types } from './types'
-import { UserRepositoryPG } from '../database/repositories/user.repository'
+import { UserRepositoryPG } from '../database/repositories-postgres/user.repository'
 import { PrismaDatabase } from '../database/implementations/prisma.database'
 import { Database } from '../database'
 import { RegisterUserController } from '../../domain/user/controllers/register-user.controller'
@@ -14,7 +14,7 @@ import { Mailer } from '../../domain/shared/Mailer'
 import { ForgotPasswordController } from '../../domain/user/controllers/forgot-password.controller'
 import { ForgotPasswordUseCase } from '../../domain/user/use-cases/forgot-password.usecase'
 import { RecoveryPasswordRepository } from '../../domain/user/repositories/recovery-password.repository'
-import { RecoveryPasswordRepositoryPG } from '../database/repositories/recovery-password.repository'
+import { RecoveryPasswordRepositoryPG } from '../database/repositories-postgres/recovery-password.repository'
 
 const container = new Container()
 

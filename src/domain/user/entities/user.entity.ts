@@ -6,7 +6,7 @@ type UserProps = {
   name: string
   email: string
   password: string
-  email_verification_code: string
+  email_verification_code?: string
   email_verified_at?: Date | null
   created_at?: Date
   updated_at?: Date

@@ -11,6 +11,16 @@ describe('User Entity Test', function () {
     expect(user.id).toBeDefined()
   })
 
+  it('should add email_verification_code to user', function () {
+    const userProps = {
+      name: 'test',
+      email: 'test@gmail.com',
+      password: 'test'
+    } as UserProps
+    const user = new User(userProps)
+    expect(user.email_verification_code).toBeDefined()
+  })
+
   it('should update password with new one', async function () {
     const userProps = {
       name: 'test',

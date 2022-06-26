@@ -30,6 +30,14 @@ class UserRepositoryPG implements UserRepository {
       data: userData
     })
   }
+
+  async findByVerificationCode (verificationCode: string): Promise<User | undefined> {
+    const userProps = await this.client.users.findFirst({ where: { email_verification_code: verificationCode } })
+    if (!userProps) {
+      return null
+    }
+    return new User(userProps, userProps.id)
+  }
 }
 
 export { UserRepositoryPG }
