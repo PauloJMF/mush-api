@@ -15,8 +15,6 @@ type RegisterUserOutput = {
   id: string,
   name: string,
   email: string,
-  created_at: Date,
-  updated_at: Date
 }
 
 @injectable()
@@ -37,7 +35,7 @@ class RegisterUserUseCase {
     const user = new User(userProps)
     await user.updatePassword(userProps.password)
     await this.userRepository.save(user)
-    await this.mailer.sendActivationEmail(user.name, user.email, 'Teste')
+    await this.mailer.sendActivationEmail(user.name, user.email, user.generateActivationLink())
     return user.toJSON()
   }
 }

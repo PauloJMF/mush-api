@@ -1,7 +1,6 @@
 import { UserRepository } from '../repositories/user.repository'
 import { inject, injectable } from 'inversify'
 import { Types } from '../../../infrastructure/ioc/types'
-import { UseCaseError } from '../../../shared/errors/use-case.error'
 
 type ActivateUserInput = {
   verificationCode: string
@@ -15,14 +14,18 @@ class ActivateUserUseCase {
   ) {
   }
 
-  async execute (values: ActivateUserInput): Promise<void> {
+  async execute (values: ActivateUserInput): Promise<string> {
     const user = await this.userRepository.findByVerificationCode(values.verificationCode)
+
     if (!user) {
-      throw new UseCaseError('User account does not exists')
+      return 'Não encontramos sua conta ou ela já está ativa'
     }
+
     user.confirmEmail()
 
-    await this.userRepository.save(user)
+    await this.userRepository.update(user)
+
+    return 'Conta ativada com sucesso'
   }
 }
 

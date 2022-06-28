@@ -7,9 +7,11 @@ const Types = {
   LoginUserController: Symbol('LoginUserController'),
   RegisterUserController: Symbol('RegisterUserController'),
   ForgotPasswordController: Symbol('ForgotPasswordController'),
+  ActivateUserController: Symbol('ActivateUserController'),
   LoginUserUseCase: Symbol('LoginUserUseCase'),
   RegisterUserUseCase: Symbol('RegisterUserUseCase'),
-  ForgotPasswordUseCase: Symbol('ForgotPasswordUseCase')
+  ForgotPasswordUseCase: Symbol('ForgotPasswordUseCase'),
+  ActivateUserUseCase: Symbol('ActivateUserUseCase')
 }
 
 export { Types }

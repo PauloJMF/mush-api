@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import { JwtConfig } from '../../../shared/config/jwt.config'
 import jwt from 'jsonwebtoken'
+import { ApplicationConfig } from '../../../shared/config/application.config'
 
 type UserProps = {
   name: string
@@ -30,6 +31,10 @@ class User {
 
   confirmEmail () {
     this.email_verified_at = new Date()
+  }
+
+  generateActivationLink (): string {
+    return ApplicationConfig.appUrl + ApplicationConfig.activationEndpoint + this.email_verification_code
   }
 
   async hashPassword (password: string): Promise<string> {
@@ -130,10 +135,7 @@ class User {
     return {
       id: this.id,
       name: this.name,
-      email: this.email,
-      email_verified_at: this.email_verified_at,
-      created_at: this.created_at,
-      updated_at: this.updated_at
+      email: this.email
     }
   }
 }

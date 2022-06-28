@@ -18,7 +18,9 @@ class RecoveryPasswordRepositoryPG implements RecoveryPasswordRepository {
 
   async findByHash (hash: string): Promise<RecoveryPassword | undefined> {
     const recoveryPasswordProps = await this.client.recovery_passwords.findFirst({
-      where: { hash }
+      where: {
+        hash
+      }
     })
     return new RecoveryPassword(recoveryPasswordProps, recoveryPasswordProps.id)
   }
@@ -26,6 +28,15 @@ class RecoveryPasswordRepositoryPG implements RecoveryPasswordRepository {
   async save (recoveryPassword: RecoveryPassword): Promise<void> {
     await this.client.recovery_passwords.create({
       data: recoveryPassword.toDB()
+    })
+  }
+
+  async update (recoveryPassword: RecoveryPassword): Promise<void> {
+    await this.client.recovery_passwords.update({
+      data: recoveryPassword.toDB(),
+      where: {
+        id: recoveryPassword.id
+      }
     })
   }
 }

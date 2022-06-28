@@ -17,6 +17,11 @@ class RecoveryPasswordRepositoryMemory implements RecoveryPasswordRepository {
   async save (recoveryPassword: RecoveryPassword): Promise<void> {
     this.recoveryArray.push(recoveryPassword)
   }
+
+  async update (recoveryPassword: RecoveryPassword): Promise<void> {
+    this.recoveryArray = this.recoveryArray.filter((existingRecovery) => existingRecovery.id !== recoveryPassword.id)
+    this.recoveryArray.push(recoveryPassword)
+  }
 }
 
 export { RecoveryPasswordRepositoryMemory }

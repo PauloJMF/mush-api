@@ -21,24 +21,32 @@ class NodeMailer implements Mailer {
 
   async sendActivationEmail (name: string, email: string, activationLink: string): Promise<void> {
     const activationLayout = activationEmail(name, email, activationLink)
-    await this.transporter.sendMail({
-      from: MailerConfig.fromEmail,
-      to: email,
-      subject: activationLayout.subject,
-      text: activationLayout.text,
-      html: activationLayout.html
-    })
+    try {
+      await this.transporter.sendMail({
+        from: MailerConfig.fromEmail,
+        to: email,
+        subject: activationLayout.subject,
+        text: activationLayout.text,
+        html: activationLayout.html
+      })
+    } catch (error) {
+      console.log('Failed to send activate email', error)
+    }
   }
 
   async sendRecoveryEmail (name: string, email: string, recoveryLink: string): Promise<void> {
     const activationLayout = recoverPasswordEmail(name, recoveryLink)
-    await this.transporter.sendMail({
-      from: MailerConfig.fromEmail,
-      to: email,
-      subject: activationLayout.subject,
-      text: activationLayout.text,
-      html: activationLayout.html
-    })
+    try {
+      await this.transporter.sendMail({
+        from: MailerConfig.fromEmail,
+        to: email,
+        subject: activationLayout.subject,
+        text: activationLayout.text,
+        html: activationLayout.html
+      })
+    } catch (error) {
+      console.log('Failed to send recovery email', error)
+    }
   }
 }
 

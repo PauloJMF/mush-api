@@ -15,6 +15,8 @@ import { ForgotPasswordController } from '../../domain/user/controllers/forgot-p
 import { ForgotPasswordUseCase } from '../../domain/user/use-cases/forgot-password.usecase'
 import { RecoveryPasswordRepository } from '../../domain/user/repositories/recovery-password.repository'
 import { RecoveryPasswordRepositoryPG } from '../database/repositories-postgres/recovery-password.repository'
+import { ActivateUserController } from '../../domain/user/controllers/activate-user.controller'
+import { ActivateUserUseCase } from '../../domain/user/use-cases/activate-user.usecase'
 
 const container = new Container()
 
@@ -29,5 +31,7 @@ container.bind<LoginUserController>(Types.LoginUserController).to(LoginUserContr
 container.bind<LoginUserUseCase>(Types.LoginUserUseCase).to(LoginUserUseCase)
 container.bind<ForgotPasswordController>(Types.ForgotPasswordController).to(ForgotPasswordController)
 container.bind<ForgotPasswordUseCase>(Types.ForgotPasswordUseCase).to(ForgotPasswordUseCase)
+container.bind<ActivateUserController>(Types.ActivateUserController).to(ActivateUserController)
+container.bind<ActivateUserUseCase>(Types.ActivateUserUseCase).to(ActivateUserUseCase)
 
 export { container }

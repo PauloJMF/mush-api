@@ -4,6 +4,7 @@ import { Database } from '../index'
 import { inject, injectable } from 'inversify'
 import { Types } from '../../ioc/types'
 import { PrismaClient } from '@prisma/client'
+import { RecoveryPassword } from '../../../domain/user/entities/recovery-password.entity'
 
 @injectable()
 class UserRepositoryPG implements UserRepository {
@@ -24,6 +25,19 @@ class UserRepositoryPG implements UserRepository {
     return new User(userProps, userProps.id)
   }
 
+  async findByVerificationCode (verificationCode: string): Promise<User | undefined> {
+    const userProps = await this.client.users.findFirst({
+      where: {
+        email_verification_code: verificationCode,
+        email_verified_at: null
+      }
+    })
+    if (!userProps) {
+      return null
+    }
+    return new User(userProps, userProps.id)
+  }
+
   async save (user: User): Promise<void> {
     const userData = user.toDB()
     await this.client.users.create({
@@ -31,12 +45,13 @@ class UserRepositoryPG implements UserRepository {
     })
   }
 
-  async findByVerificationCode (verificationCode: string): Promise<User | undefined> {
-    const userProps = await this.client.users.findFirst({ where: { email_verification_code: verificationCode } })
-    if (!userProps) {
-      return null
-    }
-    return new User(userProps, userProps.id)
+  async update (user: User): Promise<void> {
+    await this.client.users.update({
+      data: user.toDB(),
+      where: {
+        id: user.id
+      }
+    })
   }
 }
 

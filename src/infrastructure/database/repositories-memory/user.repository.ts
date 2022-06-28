@@ -7,8 +7,7 @@ class UserRepositoryMemory implements UserRepository {
   private database: any
   userArray: User[]
 
-  constructor (
-  ) {
+  constructor () {
     this.userArray = []
   }
 
@@ -21,6 +20,11 @@ class UserRepositoryMemory implements UserRepository {
   }
 
   async save (user: User): Promise<void> {
+    this.userArray.push(user)
+  }
+
+  async update (user: User): Promise<void> {
+    this.userArray = this.userArray.filter((existingUser) => existingUser.id !== user.id)
     this.userArray.push(user)
   }
 }
